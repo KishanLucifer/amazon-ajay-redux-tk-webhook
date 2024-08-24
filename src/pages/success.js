@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { resetBasket } from "../slices/basketSlice";
 import { useEffect } from "react";
 
-export default function success() {
+export default function Success() {
   const router = useRouter();
   const session = useSession();
   const dispatch = useDispatch();
