@@ -9,6 +9,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { IntlProvider, FormattedNumber } from "react-intl";
+import { signIn } from "next-auth/react";
 
 const stripePromise = loadStripe(process.env.stripe_public_key);
 
@@ -31,10 +32,9 @@ function Checkout() {
   // const newBasket = Array.from(new Set(items.map((item) => item.id))).map(
   //   (id) => items.find((item) => item.id === id)
   // );
-  const buttonStyling = `button mt-2 ${
-    !session.data &&
-    "from-gray-300 to-gray-500 text-gray-200 border-gray-200 cursor-not-allowed"
-  }`;
+  // const buttonStyling = `button mt-2 ${
+  //   !session.data && "from-gray-300 to-gray-500 text-gray-200 border-gray-200 "
+  // }`;
 
   // Old code
 
@@ -162,10 +162,9 @@ function Checkout() {
                   </span>
                 </h2>
                 <button
-                  disabled={!session.data}
-                  className={buttonStyling}
+                  className="p-2 text-xs md:text-sm bg-gradient-to-b from-yellow-200 to-yellow-400 border-yellow-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none  active:from-yellow-500"
                   role="link"
-                  onClick={createCheckoutSession}
+                  onClick={!session.data ? signIn : createCheckoutSession}
                 >
                   {!session.data
                     ? "Sign In to Checkout"

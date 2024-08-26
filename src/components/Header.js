@@ -21,18 +21,17 @@ function Header() {
   }, [items]);
 
   const showError = () => {
-    console.log("Displayed failure message");
+    // console.log("Displayed failure message");
     toast.error("Login to view orders.", {
-      // position: toast.POSITION.TOP_CENTER,
       position: "top-center",
-      toastId: "failure",
+      // toastId: "failure",
     });
   };
   // console.log(session.data); //To check if user is in session
   return (
     <header className={"sticky top-0 z-50"}>
       {/*Top Nav*/}
-      <ToastContainer autoClose={650} />
+      <ToastContainer autoClose={900} />
       <div className="flex items-center bg-amazon_blue p-1 flex-grow py-2">
         {/*The amazon logo. py-2 means the padding top is 0.5 rem*/}
         <div

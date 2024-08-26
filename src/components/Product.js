@@ -93,7 +93,7 @@ import StarIcon from "@heroicons/react/solid/StarIcon";
 // import Currency from "react-currency-formatter-v2";
 import { useDispatch } from "react-redux";
 import { addToBasket } from "../slices/basketSlice";
-import { toggleDisplayToast } from "../slices/toastMessageSlice";
+import { setToastMessage } from "../slices/toastMessageSlice";
 import { IntlProvider, FormattedNumber } from "react-intl";
 import Logo from "../../public/prime-logo.png";
 
@@ -115,7 +115,7 @@ function Product({ id, title, price, description, category, image }) {
 
   const handleAddToBasket = () => {
     addItemToBasket();
-    dispatch(toggleDisplayToast("Product added to basket")); // Pass a message
+    // dispatch(setToastMessage("Product added to basket")); // Pass a message
   };
 
   const addItemToBasket = () => {
@@ -185,55 +185,6 @@ function Product({ id, title, price, description, category, image }) {
       </div>
     </IntlProvider>
   );
-
-  // return (
-  //   <IntlProvider locale="en">
-  //     <div className="relative flex flex-col m-5 bg-white z-30 p-10">
-  //       <p className="absolute top-2 right-2 text-xs italic text-gray-400">
-  //         {category}
-  //       </p>
-  //       <Image
-  //         className="mx-16 md:mx-auto lg:mx-auto"
-  //         // layout="responsive"
-  //         src={image}
-  //         width={150}
-  //         height={150}
-  //         objectFit="contain"
-  //         // priority={true}
-  //         alt=""
-  //       />
-  //       <h4 className="my-3 text-black">{title}</h4>
-  //       <div className="flex">
-  //         {Array(rating)
-  //           .fill(1)
-  //           .map((_, index) => (
-  //             <StarIcon key={index} className="h-5 text-yellow-400" />
-  //           ))}
-  //       </div>
-  //       <p className="text-xs my-2 line-clamp-2  text-black">{description}</p>
-  //       <div className="mb-5 text-black">
-  //         {/* <Currency quantity={price} /> */}
-  //         <FormattedNumber value={price} style="currency" currency="USD" />
-  //       </div>
-  //       {hasPrime && (
-  //         <div className="flex items-center space-x-2 -mt-5">
-  //           <img
-  //             className="w-16 "
-  //             src="https://images-eu.ssl-images-amazon.com/images/G/31/prime/deliveryPage/Check-prime-PC-223X121.pn"
-  //             alt="Prime Logo"
-  //           />
-  //           <p className="text-xs text-gray-500">FREE Next Day Delivery</p>
-  //         </div>
-  //       )}
-  //       <button
-  //         className="mt-auto button text-black"
-  //         onClick={handleAddToBasket}
-  //       >
-  //         Add to Cart
-  //       </button>
-  //     </div>
-  //   </IntlProvider>
-  // );
 }
 
 export default Product;
