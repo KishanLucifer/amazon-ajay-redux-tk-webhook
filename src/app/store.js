@@ -63,7 +63,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage"; // This is for localStorage
 import { persistReducer, persistStore } from "redux-persist";
 import basketReducer from "../slices/basketSlice";
-import toastMessageReducer from "../slices/toastMessageSlice";
+// import toastMessageReducer from "../slices/toastMessageSlice";
 
 // Create a noop storage for server-side rendering (SSR)
 const createNoopStorage = () => {
@@ -91,7 +91,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   basket: basketReducer,
-  toastMessage: toastMessageReducer,
+  // toastMessage: toastMessageReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

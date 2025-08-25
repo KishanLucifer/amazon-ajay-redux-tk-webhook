@@ -11,8 +11,8 @@ import "react-toastify/dist/ReactToastify.css";
 //   selectToastMessageStatus,
 //   hideToast,
 // } from "../slices/toastMessageSlice";
-import path from "path";
-import fs from "fs";
+// import path from "path";
+// import fs from "fs";
 // import { useEffect } from "react";
 
 export default function Home({ products }) {
@@ -51,20 +51,35 @@ export default function Home({ products }) {
 }
 
 export async function getServerSideProps(context) {
-  const session = await getSession(context);
+  const session = await getSession(context); // also needs await
 
-  // Load local data from JSON file
-  const filePath = path.join(process.cwd(), "public", "products.json");
-  const jsonData = fs.readFileSync(filePath, "utf-8");
-  const products = JSON.parse(jsonData);
+  const products = await fetch("https://fakestoreapi.com/products")
+    .then((res) => res.json());
 
   return {
     props: {
-      session,
-      products,
+      session,   // if you want session
+      products,  // now contains real data
     },
   };
 }
+
+
+// export async function getServerSideProps(context) {
+//   const session = await getSession(context);
+
+//   // Load local data from JSON file
+//   const filePath = path.join(process.cwd(), "public", "products.json");
+//   const jsonData = fs.readFileSync(filePath, "utf-8");
+//   const products = JSON.parse(jsonData);
+
+//   return {
+//     props: {
+//       session,
+//       products,
+//     },
+//   };
+// }
 
 // export async function getServerSideProps(context) {
 //   const session = getSession(context);
