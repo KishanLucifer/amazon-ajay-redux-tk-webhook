@@ -92,8 +92,8 @@ import React, { useState, useEffect } from "react";
 import StarIcon from "@heroicons/react/solid/StarIcon";
 // import Currency from "react-currency-formatter-v2";
 import { useDispatch } from "react-redux";
-import { addToBasket } from "../slices/basketSlice";
-import { setToastMessage } from "../slices/toastMessageSlice";
+import { addToBasket } from "../redux/slices/basketSlice";
+import { setToastMessage } from "../redux/slices/toastMessageSlice";
 import { IntlProvider, FormattedNumber } from "react-intl";
 import Logo from "../../public/prime-logo.png";
 
@@ -178,8 +178,7 @@ function Product({ id, title, price, description, category, image }) {
         )}
         <button
           className="mt-auto button text-black"
-          onClick={handleAddToBasket}
-        >
+          onClick={handleAddToBasket}>
           Add to Cart
         </button>
       </div>

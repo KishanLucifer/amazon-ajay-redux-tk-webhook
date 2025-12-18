@@ -8,7 +8,7 @@ import {
   reduceQuantity,
   removeFromBasket,
   selectItems,
-} from "../slices/basketSlice";
+} from "../redux/slices/basketSlice";
 import { IntlProvider, FormattedNumber } from "react-intl";
 import Logo from "../../public/prime-logo.png";
 

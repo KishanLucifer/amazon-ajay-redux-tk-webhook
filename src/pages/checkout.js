@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import Header from "../components/Header";
 import Image from "next/image";
-import { selectItems } from "../slices/basketSlice";
+import { selectItems } from "../redux/slices/basketSlice";
 import CheckoutProduct from "../components/CheckoutProduct";
 // import Currency from "react-currency-formatter-v2";
 import { useSession } from "next-auth/react";
@@ -164,8 +164,7 @@ function Checkout() {
                 <button
                   className="p-2 text-xs md:text-sm bg-gradient-to-b from-yellow-200 to-yellow-400 border-yellow-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none  active:from-yellow-500"
                   role="link"
-                  onClick={!session.data ? signIn : createCheckoutSession}
-                >
+                  onClick={!session.data ? signIn : createCheckoutSession}>
                   {!session.data
                     ? "Sign In to Checkout"
                     : "Proceed to Checkout"}

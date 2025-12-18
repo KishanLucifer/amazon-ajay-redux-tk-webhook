@@ -3,7 +3,7 @@ import { CheckCircleIcon } from "@heroicons/react/solid";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
-import { resetBasket } from "../slices/basketSlice";
+import { resetBasket } from "../redux/slices/basketSlice";
 import { useEffect } from "react";
 
 export default function Success() {
@@ -21,8 +21,7 @@ export default function Success() {
         <div
           className={
             "flex flex-col mx-10 bg-white z-40 p-10 space-y-5 justify-center"
-          }
-        >
+          }>
           <div className="flex space-x-5 justify-center">
             <CheckCircleIcon className={"text-green-500 h-10"} />
             <p className={"text-2xl text-black"}>Thankyou for your order</p>
@@ -36,8 +35,7 @@ export default function Success() {
             className={"button w-full"}
             onClick={() => {
               router.push("/orders");
-            }}
-          >
+            }}>
             Go to my orders
           </button>
         </div>

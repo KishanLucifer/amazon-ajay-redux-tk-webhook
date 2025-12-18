@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 // import Currency from "react-currency-formatter-v2";
 import { useSelector } from "react-redux";
-import { selectItems } from "../slices/basketSlice";
+import { selectItems } from "../redux/slices/basketSlice";
 import { IntlProvider, FormattedNumber } from "react-intl";
 
 export default function Order({

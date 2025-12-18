@@ -6,7 +6,7 @@ import MenuIcon from "@heroicons/react/outline/MenuIcon";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { selectItems } from "../slices/basketSlice";
+import { selectItems } from "../redux/slices/basketSlice";
 import { ToastContainer, toast } from "react-toastify";
 
 function Header() {
@@ -36,8 +36,7 @@ function Header() {
         {/*The amazon logo. py-2 means the padding top is 0.5 rem*/}
         <div
           className="relative mt-2 mx-5 flex items-center sm:flex-grow-0 w-28
-h-10"
-        >
+h-10">
           <Image
             className="cursor-pointer  "
             src="https://links.papareact.com/f90"
@@ -62,8 +61,7 @@ h-10"
           <input
             className="p-2 h-full w-6 flex-grow flex-shrink rounded-l-md focus:outline-none px-4"
             type="text"
-            placeholder="Ajay appriciate your effort to visit... Thank you...!!!"
-          ></input>
+            placeholder="Ajay appriciate your effort to visit... Thank you...!!!"></input>
           {/* The flex-shrink class will reduce the size of the search bar if we fit other components in. */}
           <SearchIcon className="h-12 p-4" />
         </div>
@@ -82,15 +80,13 @@ h-10"
             className="link"
             onClick={() =>
               session.data?.user ? router.push("/orders") : showError()
-            }
-          >
+            }>
             <p>Returns</p>
             <p className="font-extrabold md:text-sm">& Orders</p>
           </div>
           <div
             className="relative link flex items-center"
-            onClick={() => router.push("/checkout")}
-          >
+            onClick={() => router.push("/checkout")}>
             <span className="absolute top-0 right-0 md:right-10 h-4 w-4 bg-yellow-400 text-center rounded-full text-black font-bold">
               {cartCount}
             </span>
