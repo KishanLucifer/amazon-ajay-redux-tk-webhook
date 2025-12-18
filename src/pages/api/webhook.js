@@ -45,7 +45,6 @@ const fulfillOrder = async (session) => {
     .catch((err) => {
       console.log(`Error! Error ${err.message()}`);
     });
-  ``;
 };
 
 export default async (req, res) => {
