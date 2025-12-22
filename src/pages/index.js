@@ -51,19 +51,48 @@ export default function Home({ products }) {
 }
 
 export async function getServerSideProps(context) {
-  const session = await getSession(context); // also needs await
+  const session = await getSession(context);
 
-  const products = await fetch("https://fakestoreapi.com/products")
-    .then((res) => res.json());
+  let products = [];
+
+  try {
+    const res = await fetch("https://fakestoreapi.com/products", {
+      headers: {
+        Accept: "application/json",
+        "User-Agent": "Next.js Server",
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error(`API failed with status ${res.status}`);
+    }
+
+    products = await res.json();
+  } catch (error) {
+    console.error("Product fetch failed:", error.message);
+  }
 
   return {
     props: {
-      session,   // if you want session
-      products,  // now contains real data
+      session,
+      products,
     },
   };
 }
 
+// export async function getServerSideProps(context) {
+//   const session = await getSession(context); // also needs await
+
+//   const products = await fetch("https://fakestoreapi.com/products")
+//     .then((res) => res.json());
+
+//   return {
+//     props: {
+//       session,   // if you want session
+//       products,  // now contains real data
+//     },
+//   };
+// }
 
 // export async function getServerSideProps(context) {
 //   const session = await getSession(context);
