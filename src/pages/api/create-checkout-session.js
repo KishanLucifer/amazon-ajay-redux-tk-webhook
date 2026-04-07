@@ -7,7 +7,7 @@ export default async (req, res) => {
     quantity: quantityList[item.id],
     price_data: {
       currency: "usd",
-      unit_amount: (item.price * 100).toFixed(), // amount in cents, again!
+      unit_amount: Math.round(item.price * 100), // amount in cents, again!
       product_data: {
         name: item.title,
         description: item.description,
@@ -16,46 +16,61 @@ export default async (req, res) => {
     },
   }));
 
-  // This is the formated data from the stripe and show on the checkout(payment) page
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
-    shipping_address_collection: {
-      allowed_countries: ["US"],
-    },
-    line_items: transformedItems,
-    shipping_options: [
-      {
-        shipping_rate_data: {
-          type: "fixed_amount",
-          fixed_amount: {
-            amount: 300,
-            currency: "usd",
-          },
-          display_name: "Next day air",
-          delivery_estimate: {
-            minimum: {
-              unit: "business_day",
-              value: 1,
+  try {
+    let imagesData = items.map((item) => item.image);
+    let imagesString = JSON.stringify(imagesData);
+
+    // Stripe metadata values have a limit of 500 characters. Slicing array to fit.
+    while (imagesString.length > 500 && imagesData.length > 1) {
+      imagesData.pop();
+      imagesString = JSON.stringify(imagesData);
+    }
+
+    const host = process.env.HOST || "https://ajay-amzon.vercel.app";
+
+    // This is the formated data from the stripe and show on the checkout(payment) page
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      shipping_address_collection: {
+        allowed_countries: ["US"],
+      },
+      line_items: transformedItems,
+      shipping_options: [
+        {
+          shipping_rate_data: {
+            type: "fixed_amount",
+            fixed_amount: {
+              amount: 300,
+              currency: "usd",
             },
-            maximum: {
-              unit: "business_day",
-              value: 1,
+            display_name: "Next day air",
+            delivery_estimate: {
+              minimum: {
+                unit: "business_day",
+                value: 1,
+              },
+              maximum: {
+                unit: "business_day",
+                value: 1,
+              },
             },
           },
         },
+      ],
+      mode: "payment",
+      success_url: `${host}/success`,
+      cancel_url: `${host}/checkout`,
+      metadata: {
+        userEmail: email,
+        images: imagesString,
       },
-    ],
-    mode: "payment",
-    success_url: `${process.env.HOST}/success`,
-    cancel_url: `${process.env.HOST}`,
-    metadata: {
-      userEmail: email,
-      images: JSON.stringify(items.map((item) => item.image)),
-      // images: JSON.stringify(items.map((item) => item.id).join(",")),
-    },
-  });
+    });
 
-  res.status(200).json({ id: session.id }); // this is the response part which is returned due to stripe API call from our endpoint created here.
+    res.status(200).json({ id: session.id }); // this is the response part which is returned due to stripe API call from our endpoint created here.
+  } catch (error) {
+    console.error("Stripe Error:", error);
+    res.status(500).json({ error: error.message });
+  }
 };
 
 // const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);

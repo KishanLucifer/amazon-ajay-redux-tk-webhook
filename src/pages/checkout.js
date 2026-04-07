@@ -50,16 +50,27 @@ function Checkout() {
     });
     // console.log(createCheckoutSession);
     //Exact call is here in the two variable assignments below
-    const checkoutSession = await axios.post("/api/create-checkout-session", {
-      items: newBasket,
-      email: session?.data?.user?.email,
-      quantityList: quantityForItems,
-    });
-    const result = await stripe.redirectToCheckout({
-      sessionId: checkoutSession.data.id,
-    });
-    if (result.error) {
-      alert(result.error);
+    try {
+      const checkoutSession = await axios.post("/api/create-checkout-session", {
+        items: newBasket,
+        email: session?.data?.user?.email,
+        quantityList: quantityForItems,
+      });
+      
+      const result = await stripe.redirectToCheckout({
+        sessionId: checkoutSession.data.id,
+      });
+      
+      if (result.error) {
+        alert(result.error.message);
+      }
+    } catch (error) {
+      console.error(error);
+      alert(
+        error.response?.data?.error || 
+        error.message || 
+        "Something went wrong while proceeding to checkout."
+      );
     }
   };
 
